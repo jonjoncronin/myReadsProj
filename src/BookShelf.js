@@ -10,31 +10,25 @@ class BookShelf extends Component {
   render() {
     const { title, books } = this.props
     let showingBooks
-
+    let filter
     switch (title) {
       case "Currently Reading":
-        showingBooks = books.filter((book) => (
-          book.shelf === "currentlyReading"
-        ))
+        filter = "currentlyReading"
         break;
       case "Want to Read":
-        showingBooks = books.filter((book) => (
-          book.shelf === "wantToRead"
-        ))
+        filter = "wantToRead"
         break;
       case "Read":
-        showingBooks = books.filter((book) => (
-          book.shelf === "read"
-        ))
+        filter = "read"
         break;
       default:
-        showingBooks = books.filter((book) => (
-          book.shelf === "none"
-        ))
+        filter = "none"
         break;
     }
-    console.log(books)
-    console.log(showingBooks)
+
+    showingBooks = books.filter((book) => (
+      book.shelf === filter
+    ))
 
     return (
       <div className="bookshelf">
@@ -47,8 +41,8 @@ class BookShelf extends Component {
                   <div className="book-top">
                     <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
                     <div className="book-shelf-changer">
-                      <select>
-                        <option value="none" disabled>Move to...</option>
+                      <select defaultValue={filter}>
+                        <option value="move" disabled>Move to...</option>
                         <option value="currentlyReading">Currently Reading</option>
                         <option value="wantToRead">Want to Read</option>
                         <option value="read">Read</option>
