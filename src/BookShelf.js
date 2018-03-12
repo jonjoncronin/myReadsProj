@@ -7,6 +7,10 @@ class BookShelf extends Component {
     // books: PropTypes.array.isRequired
   }
 
+  handleChange = (filter, book) => {
+    alert("For book " + book.title + " you chose " + filter)
+  }
+
   render() {
     const { title, books } = this.props
     let showingBooks
@@ -41,7 +45,7 @@ class BookShelf extends Component {
                   <div className="book-top">
                     <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
                     <div className="book-shelf-changer">
-                      <select defaultValue={filter}>
+                      <select defaultValue={filter} onChange={(event) => this.handleChange(event.target.value, book)}>
                         <option value="move" disabled>Move to...</option>
                         <option value="currentlyReading">Currently Reading</option>
                         <option value="wantToRead">Want to Read</option>
