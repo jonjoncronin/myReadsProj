@@ -20,7 +20,6 @@ class ListBooks extends Component {
             <BookShelf title="Currently Reading" books={books} />
             <BookShelf title="Want to Read" books={books} />
             <BookShelf title="Read" books={books} />
-            <BookShelf title="To Be Classified" books={books} />
           </div>
         </div>
       </div>
