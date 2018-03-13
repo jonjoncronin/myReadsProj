@@ -2,13 +2,19 @@ import React from 'react'
 import './App.css'
 import ListBooks from './ListBooks'
 import { Route } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
         <Route exact path="/" render={() => (
-          <ListBooks />
+          <div>
+            <ListBooks />
+            <div className="open-search">
+              <Link to="/search" className="open-search">Add Book</Link>
+            </div>
+          </div>
           // <div className="list-books">
           //   <div className="list-books-title">
           //     <h1>MyReads</h1>
