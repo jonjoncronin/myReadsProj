@@ -1,33 +1,14 @@
 import React from 'react'
 import './App.css'
-import * as BooksAPI from './BooksAPI'
 import ListBooks from './ListBooks'
 import { Route } from 'react-router-dom'
 
 class BooksApp extends React.Component {
-  state = {
-    books: []
-  }
-
-  /**
-   * When BooksApp component mounts we need to call the BooksAPI to get the
-   * list of books that needs to be displayed by the App.
-   */
-  componentDidMount () {
-    BooksAPI.getAll()
-    .then((books) => {
-      this.setState({books})
-    })
-    .then(() => {
-      console.log(this.state.books)
-    })
-  }
-
   render() {
     return (
       <div className="app">
         <Route exact path="/" render={() => (
-          <ListBooks books={this.state.books} />
+          <ListBooks />
           // <div className="list-books">
           //   <div className="list-books-title">
           //     <h1>MyReads</h1>

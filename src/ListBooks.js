@@ -1,14 +1,40 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import BookShelf from './BookShelf'
+import * as BooksAPI from './BooksAPI'
 
 class ListBooks extends Component {
-  // static propTypes = {
-  //   books: PropTypes.array.isRequired
-  // }
+  state = {
+    books: []
+  }
+
+  /**
+   * When BooksApp component mounts we need to call the BooksAPI to get the
+   * list of books that needs to be displayed by the App.
+   */
+  componentDidMount () {
+    BooksAPI.getAll()
+    .then((books) => {
+      this.setState({books})
+    })
+    .then(() => {
+      console.log(this.state.books)
+    })
+  }
+
+  updateBookShelf = (book, shelf) => {
+    console.log("updating " + book.title + " to shelf " + shelf)
+    BooksAPI.update(book,shelf).then(() => {
+      BooksAPI.getAll()
+      .then((books) => {
+        this.setState({books})
+      })
+      .then(() => {
+        console.log(this.state.books)
+      })
+    })
+  }
 
   render() {
-    const { books } = this.props
 
     return (
       <div className="list-books">
@@ -17,9 +43,24 @@ class ListBooks extends Component {
         </div>
         <div className="list-books-content">
           <div>
-            <BookShelf title="Currently Reading" books={books} />
-            <BookShelf title="Want to Read" books={books} />
-            <BookShelf title="Read" books={books} />
+            <BookShelf
+              title="Currently Reading"
+              onUpdateShelf={this.updateBookShelf}
+              books={this.state.books.filter((book) => {
+                return book.shelf === "currentlyReading"
+              })} />
+            <BookShelf
+              title="Want to Read"
+              onUpdateShelf={this.updateBookShelf}
+              books={this.state.books.filter((book) => {
+                return book.shelf === "wantToRead"
+              })} />
+            <BookShelf
+              title="Read"
+              onUpdateShelf={this.updateBookShelf}
+              books={this.state.books.filter((book) => {
+                return book.shelf === "read"
+              })} />
           </div>
         </div>
       </div>
