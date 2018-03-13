@@ -5,5 +5,5 @@ base framework needed.
 Done - proptypes will probably be needed - npm install --save prop-types
 Done - react router will probably be needed - npm install --save react-router-dom
 form serialization will probably be needed - npm install --save form-serialize
-sortBy will probably be needed - npm install --save sort-by
+Done - sortBy will probably be needed - npm install --save sort-by
 escapeRegExp will probably be needed - npm install --save escape-string-regexp
