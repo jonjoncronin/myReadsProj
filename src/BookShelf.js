@@ -29,17 +29,23 @@ class BookShelf extends Component {
     }
 
     let showingBooks = books
-    console.log(books.length)
-    // if (showingBooks.length != 0) {
-    //   showingBooks.sort(sortBy('title'))
-    // }
+
+    if (showingBooks) {
+      console.log("Books to show:")
+      console.log(showingBooks)
+      showingBooks.sort(sortBy('title'))
+    }
+    else {
+      console.log("No books to show")
+    }
 
     return (
       <div className="bookshelf">
         <h2 className="bookshelf-title">{title}</h2>
         <div className="bookshelf-books">
           <ol className="books-grid">
-            {showingBooks.map((book) => (
+            {
+              showingBooks && showingBooks.map((book) => (
               <li key={book.id}>
                 <div className="book">
                   <div className="book-top">
@@ -47,12 +53,12 @@ class BookShelf extends Component {
                       style={{
                         width: 128,
                         height: 193,
-                        backgroundImage:
-                          `url(${book.imageLinks.smallThumbnail})` }}>
+                        backgroundImage:book.imageLinks ? `url(${book.imageLinks.smallThumbnail})`: ``
+                        }}>
                     </div>
                     <div className="book-shelf-changer">
                       <select
-                        defaultValue={book.shelf}
+                        defaultValue={book.shelf ? book.shelf: `none`}
                         onChange={(event) => {
                           onUpdateShelf(book, event.target.value)
                         }}>
@@ -65,10 +71,11 @@ class BookShelf extends Component {
                     </div>
                   </div>
                   <div className="book-title">{book.title}</div>
-                  <div className="book-authors">{book.authors[0]}</div>
+                  <div className="book-authors">{book.authors ? book.authors[0]:`no author`}</div>
                 </div>
               </li>
-            ))}
+            ))
+          }
           </ol>
         </div>
       </div>

@@ -7,35 +7,33 @@ import escapeRegExp from 'escape-string-regexp'
 class SearchBooks extends Component {
   state = {
     query: '',
-    books: []
+    showingBooks: []
   }
 
-  componentDidMount () {
-    BooksAPI.getAll()
-    .then((books) => {
-      this.setState({books})
-    })
-    .then(() => {
-      console.log(this.state.books)
-    })
+  componentDidUpdate () {
+    if (this.state.query && this.state.showingBooks.length == 0) {
+      console.log("Searching: " + this.state.query)
+      BooksAPI.search(this.state.query)
+      .then((books) => {
+        if(books.error) {
+          console.log("Search error: " + books.error)
+        }
+        else {
+          console.log("found: ")
+          console.log(books)
+          this.setState({showingBooks: books})
+        }
+      })
+    }
   }
 
   updateQuery = (query) => {
-    console.log("Searching for " + query.trim())
-    this.setState({query: query.trim()})
-  }
-
-  clearQuery = () => {
-    this.setState({query: ''})
+    console.log("Query: " + query)
+    this.setState({query: query})
+    this.setState({showingBooks: []})
   }
 
   render() {
-    let showingBooks = this.state.books
-    if (this.state.query) {
-      const match = new RegExp(escapeRegExp(this.state.query), 'i')
-      showingBooks = this.state.books.filter((book) => match.test(book.title) || match.test(book.authors))
-    }
-
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -61,8 +59,7 @@ class SearchBooks extends Component {
         </div>
         <div className="search-books-results">
           <BookShelf
-            title="Search Results"
-            books={showingBooks} />
+            books={this.state.showingBooks} />
         </div>
       </div>
     )
