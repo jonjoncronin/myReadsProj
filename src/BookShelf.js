@@ -52,7 +52,7 @@ class BookShelf extends Component {
                     </div>
                     <div className="book-shelf-changer">
                       <select
-                        defaultValue={filter}
+                        defaultValue={book.shelf}
                         onChange={(event) => {
                           onUpdateShelf(book, event.target.value)
                         }}>
