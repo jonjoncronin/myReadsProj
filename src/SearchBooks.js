@@ -1,10 +1,23 @@
 import React, { Component } from 'react'
+import BookShelf from './BookShelf'
 import * as BooksAPI from './BooksAPI'
 import { Link } from 'react-router-dom'
+import escapeRegExp from 'escape-string-regexp'
 
 class SearchBooks extends Component {
   state = {
-    query: ''
+    query: '',
+    books: []
+  }
+
+  componentDidMount () {
+    BooksAPI.getAll()
+    .then((books) => {
+      this.setState({books})
+    })
+    .then(() => {
+      console.log(this.state.books)
+    })
   }
 
   updateQuery = (query) => {
@@ -17,6 +30,12 @@ class SearchBooks extends Component {
   }
 
   render() {
+    let showingBooks = this.state.books
+    if (this.state.query) {
+      const match = new RegExp(escapeRegExp(this.state.query), 'i')
+      showingBooks = this.state.books.filter((book) => match.test(book.title) || match.test(book.authors))
+    }
+
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -41,7 +60,9 @@ class SearchBooks extends Component {
           </div>
         </div>
         <div className="search-books-results">
-          <ol className="books-grid"></ol>
+          <BookShelf
+            title="Search Results"
+            books={showingBooks} />
         </div>
       </div>
     )

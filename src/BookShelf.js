@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import sortBy from 'sort-by'
 
 class BookShelf extends Component {
-  static propTypes = {
-    title: PropTypes.string.isRequired,
-    books: PropTypes.array.isRequired,
-    onUpdateShelf: PropTypes.func.isRequired
-  }
+  // static propTypes = {
+  //   title: PropTypes.string.isRequired,
+  //   books: PropTypes.array.isRequired,
+  //   onUpdateShelf: PropTypes.func.isRequired
+  // }
 
   render() {
     const { title, books, onUpdateShelf } = this.props
@@ -29,7 +29,10 @@ class BookShelf extends Component {
     }
 
     let showingBooks = books
-    showingBooks.sort(sortBy('title'))
+    console.log(books.length)
+    // if (showingBooks.length != 0) {
+    //   showingBooks.sort(sortBy('title'))
+    // }
 
     return (
       <div className="bookshelf">
