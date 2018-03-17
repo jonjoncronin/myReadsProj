@@ -46,13 +46,13 @@ class BooksApp extends React.Component {
             <ListBooks
               books={this.state.myBooks}
               onUpdateShelf={this.updateBookShelf} />
-            {/* <div className="open-search">
+            <div className="open-search">
               <Link to="/search" className="open-search">Add Book</Link>
-            </div>*/}
+            </div>
           </div>
         )}/>
         <Route path="/search" render={({ history }) => (
-          <SearchBooks />
+          <SearchBooks onUpdateShelf={this.updateBookShelf} />
         )}/>
       </div>
     )

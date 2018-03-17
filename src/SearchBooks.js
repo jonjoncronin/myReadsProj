@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
-import BookShelf from './BookShelf'
 import * as BooksAPI from './BooksAPI'
 import { Link } from 'react-router-dom'
 import escapeRegExp from 'escape-string-regexp'
+import PropTypes from 'prop-types'
 
 class SearchBooks extends Component {
+  static propTypes = {
+    onUpdateShelf: PropTypes.func.isRequired
+  }
+
   state = {
     query: '',
     showingBooks: []
@@ -34,6 +38,8 @@ class SearchBooks extends Component {
   }
 
   render() {
+    const onUpdateShelf = this.props
+
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -58,8 +64,7 @@ class SearchBooks extends Component {
           </div>
         </div>
         <div className="search-books-results">
-          <BookShelf
-            books={this.state.showingBooks} />
+          show found books for {this.state.query}
         </div>
       </div>
     )
