@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import * as BooksAPI from './BooksAPI'
+import RemoteLibrary from './RemoteLibrary'
 import { Link } from 'react-router-dom'
 import escapeRegExp from 'escape-string-regexp'
 import PropTypes from 'prop-types'
@@ -11,11 +12,11 @@ class SearchBooks extends Component {
 
   state = {
     query: '',
-    showingBooks: []
+    foundBooks: []
   }
 
   componentDidUpdate () {
-    if (this.state.query && this.state.showingBooks.length == 0) {
+    if (this.state.query && this.state.foundBooks.length == 0) {
       console.log("Searching: " + this.state.query)
       BooksAPI.search(this.state.query)
       .then((books) => {
@@ -25,7 +26,7 @@ class SearchBooks extends Component {
         else {
           console.log("found: ")
           console.log(books)
-          this.setState({showingBooks: books})
+          this.setState({foundBooks: books})
         }
       })
     }
@@ -34,11 +35,10 @@ class SearchBooks extends Component {
   updateQuery = (query) => {
     console.log("Query: " + query)
     this.setState({query: query})
-    this.setState({showingBooks: []})
+    this.setState({foundBooks: []})
   }
 
   render() {
-    const onUpdateShelf = this.props
 
     return (
       <div className="search-books">
@@ -65,6 +65,7 @@ class SearchBooks extends Component {
         </div>
         <div className="search-books-results">
           show found books for {this.state.query}
+          <RemoteLibrary books={this.state.foundBooks} onUpdateShelf={this.props.onUpdateShelf} />
         </div>
       </div>
     )
