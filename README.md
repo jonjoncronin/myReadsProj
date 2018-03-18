@@ -102,7 +102,6 @@ Udacity React Nanodegree.
 * JSX Formatting
   - All JSX code is formatted properly and functional.
 
-## Documentation   
 # High Level Design
 The MyReads application is a Single Page Application that allows a user to
 select and categorize books they have read, are currently reading, or want to
