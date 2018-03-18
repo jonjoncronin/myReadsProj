@@ -12,12 +12,10 @@ class RemoteLibrary extends Component {
   render() {
     const { books, onUpdateShelf } = this.props
 
-    let showingBooks = books
-
-    if (showingBooks) {
+    if (books) {
       console.log("Library Books to show:")
-      console.log(showingBooks)
-      showingBooks.sort(sortBy('title'))
+      console.log(books)
+      books.sort(sortBy('title'))
     }
     else {
       console.log("No books to show")
@@ -28,7 +26,7 @@ class RemoteLibrary extends Component {
         <div className="bookshelf-books">
           <ol className="books-grid">
             {
-              showingBooks && showingBooks.map((book) => (
+              books && books.map((book) => (
                 <Book key={book.id} book={book} onUpdateShelf={onUpdateShelf} />
               ))
             }

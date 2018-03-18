@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import * as BooksAPI from './BooksAPI'
 import RemoteLibrary from './RemoteLibrary'
 import { Link } from 'react-router-dom'
-import escapeRegExp from 'escape-string-regexp'
 import PropTypes from 'prop-types'
 
 class SearchBooks extends Component {
@@ -16,7 +15,7 @@ class SearchBooks extends Component {
   }
 
   componentDidUpdate () {
-    if (this.state.query && this.state.foundBooks.length == 0) {
+    if (this.state.query && this.state.foundBooks.length === 0) {
       console.log("Searching: " + this.state.query)
       BooksAPI.search(this.state.query)
       .then((books) => {
@@ -39,6 +38,8 @@ class SearchBooks extends Component {
   }
 
   render() {
+    const onUpdateShelf = this.props.onUpdateShelf;
+    let count = this.state.foundBooks.length;
 
     return (
       <div className="search-books">
@@ -46,16 +47,7 @@ class SearchBooks extends Component {
           <Link
             to="/"
             className="close-search">Close</Link>
-          {/*<a className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</a> */}
           <div className="search-books-input-wrapper">
-            {/*
-              NOTES: The search from BooksAPI is limited to a particular set of search terms.
-              You can find these search terms here:
-              https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-
-              However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-              you don't find a specific author or title. Every search is limited by search terms.
-            */}
             <input
               type="text"
               placeholder="Search by title or author"
@@ -64,8 +56,8 @@ class SearchBooks extends Component {
           </div>
         </div>
         <div className="search-books-results">
-          show found books for {this.state.query}
-          <RemoteLibrary books={this.state.foundBooks} onUpdateShelf={this.props.onUpdateShelf} />
+          {this.state.query && `Found ${count} books for ${this.state.query}`}
+          <RemoteLibrary books={this.state.foundBooks} onUpdateShelf={onUpdateShelf} />
         </div>
       </div>
     )
