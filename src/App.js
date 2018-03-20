@@ -20,19 +20,26 @@ class BooksApp extends React.Component {
     .then((books) => {
       this.setState({myBooks: books})
     })
-    .then(() => {
-      console.log(this.state.myBooks)
-    })
   }
 
   updateBookShelf = (book, shelf) => {
-    console.log("updating " + book.title + " to shelf " + shelf)
+    // console.log("updating " + book.title + " to shelf " + shelf)
     let myLib = this.state.myBooks.filter(libBook => (libBook.id !== book.id))
     let updatedBook = book
     updatedBook.shelf = shelf
     myLib.push(updatedBook)
     this.setState({myBooks: myLib})
     BooksAPI.update(book,shelf)
+  }
+
+  getBookShelf = (bookId) => {
+    let existingBook = this.state.myBooks.find(book => book.id === bookId)
+    if(existingBook) {
+      return existingBook.shelf
+    }
+    else {
+      return "none"
+    }
   }
 
   render() {
@@ -42,14 +49,17 @@ class BooksApp extends React.Component {
           <div>
             <ListBooks
               books={this.state.myBooks}
-              onUpdateShelf={this.updateBookShelf} />
+              onUpdateShelf={this.updateBookShelf}
+              onGetBookShelf={this.getBookShelf} />
             <div className="open-search">
               <Link to="/search" className="open-search">Add Book</Link>
             </div>
           </div>
         )}/>
         <Route path="/search" render={({ history }) => (
-          <SearchBooks onUpdateShelf={this.updateBookShelf} />
+          <SearchBooks
+            onUpdateShelf={this.updateBookShelf}
+            onGetBookShelf={this.getBookShelf} />
         )}/>
       </div>
     )

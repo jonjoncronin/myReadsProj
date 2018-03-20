@@ -5,11 +5,12 @@ import PropTypes from 'prop-types'
 class ListBooks extends Component {
   static propTypes = {
     books: PropTypes.array.isRequired,
-    onUpdateShelf: PropTypes.func.isRequired
+    onUpdateShelf: PropTypes.func.isRequired,
+    onGetBookShelf: PropTypes.func.isRequired
   }
 
   render() {
-    const { books, onUpdateShelf } = this.props
+    const { books, onUpdateShelf, onGetBookShelf } = this.props
     const shelves = [
       {
         id: "currentlyReading",
@@ -41,7 +42,8 @@ class ListBooks extends Component {
                   key={shelf.id}
                   title={shelf.title}
                   onUpdateShelf={onUpdateShelf}
-                  books={shelf.books} />
+                  books={shelf.books}
+                  onGetBookShelf={onGetBookShelf} />
               ))
             }
           </div>

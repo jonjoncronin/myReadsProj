@@ -6,7 +6,8 @@ import PropTypes from 'prop-types'
 
 class SearchBooks extends Component {
   static propTypes = {
-    onUpdateShelf: PropTypes.func.isRequired
+    onUpdateShelf: PropTypes.func.isRequired,
+    onGetBookShelf: PropTypes.func.isRequired
   }
 
   state = {
@@ -16,30 +17,29 @@ class SearchBooks extends Component {
 
   componentDidUpdate () {
     if (this.state.query && this.state.foundBooks.length === 0) {
-      console.log("Searching: " + this.state.query)
       BooksAPI.search(this.state.query)
       .then((books) => {
         if(books.error) {
           console.log("Search error: " + books.error)
         }
         else {
-          console.log("found: ")
-          console.log(books)
           this.setState({foundBooks: books})
         }
       })
     }
   }
 
+
+
   updateQuery = (query) => {
-    console.log("Query: " + query)
+    // console.log("Query: " + query)
     this.setState({query: query})
     this.setState({foundBooks: []})
   }
 
   render() {
-    const onUpdateShelf = this.props.onUpdateShelf;
-    let count = this.state.foundBooks.length;
+    const { onUpdateShelf, onGetBookShelf } = this.props
+    let count = this.state.foundBooks.length
 
     return (
       <div className="search-books">
@@ -57,7 +57,10 @@ class SearchBooks extends Component {
         </div>
         <div className="search-books-results">
           {this.state.query && `Found ${count} books for ${this.state.query}`}
-          <RemoteLibrary books={this.state.foundBooks} onUpdateShelf={onUpdateShelf} />
+          <RemoteLibrary
+            books={this.state.foundBooks}
+            onUpdateShelf={onUpdateShelf}
+            onGetBookShelf={onGetBookShelf} />
         </div>
       </div>
     )

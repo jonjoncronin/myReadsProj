@@ -7,17 +7,16 @@ class BookShelf extends Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
     books: PropTypes.array.isRequired,
-    onUpdateShelf: PropTypes.func.isRequired
+    onUpdateShelf: PropTypes.func.isRequired,
+    onGetBookShelf: PropTypes.func.isRequired
   }
 
   render() {
-    const { title, books, onUpdateShelf } = this.props
+    const { title, books, onUpdateShelf, onGetBookShelf } = this.props
 
     let showingBooks = books
 
     if (showingBooks) {
-      console.log("Books to show:")
-      console.log(showingBooks)
       showingBooks.sort(sortBy('title'))
     }
     else {
@@ -31,7 +30,11 @@ class BookShelf extends Component {
           <ol className="books-grid">
             {
               showingBooks && showingBooks.map((book) => (
-                <Book key={book.id} book={book} onUpdateShelf={onUpdateShelf} />
+                <Book
+                  key={book.id}
+                  book={book}
+                  onUpdateShelf={onUpdateShelf}
+                  onGetBookShelf={onGetBookShelf} />
               ))
             }
           </ol>

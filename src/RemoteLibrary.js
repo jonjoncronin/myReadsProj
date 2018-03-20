@@ -6,15 +6,14 @@ import Book from './Book'
 class RemoteLibrary extends Component {
   static propTypes = {
     books: PropTypes.array.isRequired,
-    onUpdateShelf: PropTypes.func.isRequired
+    onUpdateShelf: PropTypes.func.isRequired,
+    onGetBookShelf: PropTypes.func.isRequired
   }
 
   render() {
-    const { books, onUpdateShelf } = this.props
+    const { books, onUpdateShelf, onGetBookShelf } = this.props
 
     if (books) {
-      console.log("Library Books to show:")
-      console.log(books)
       books.sort(sortBy('title'))
     }
     else {
@@ -27,7 +26,11 @@ class RemoteLibrary extends Component {
           <ol className="books-grid">
             {
               books && books.map((book) => (
-                <Book key={book.id} book={book} onUpdateShelf={onUpdateShelf} />
+                <Book
+                  key={book.id}
+                  book={book}
+                  onUpdateShelf={onUpdateShelf}
+                  onGetBookShelf={onGetBookShelf} />
               ))
             }
           </ol>

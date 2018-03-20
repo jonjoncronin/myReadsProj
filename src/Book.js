@@ -5,10 +5,11 @@ import PropTypes from 'prop-types'
 class Book extends React.Component {
   static propTypes = {
     book: PropTypes.object.isRequired,
-    onUpdateShelf: PropTypes.func.isRequired
+    onUpdateShelf: PropTypes.func.isRequired,
+    onGetBookShelf: PropTypes.func.isRequired
   }
   render() {
-    const { book, onUpdateShelf } = this.props
+    const { book, onUpdateShelf, onGetBookShelf } = this.props
 
     return (
       <li>
@@ -23,7 +24,7 @@ class Book extends React.Component {
             </div>
             <div className="book-shelf-changer">
               <select
-                defaultValue={book.shelf ? book.shelf: `none`}
+                defaultValue={onGetBookShelf(book.id)}
                 onChange={(event) => {
                   onUpdateShelf(book, event.target.value)
                 }}>
