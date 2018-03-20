@@ -10,7 +10,23 @@ class ListBooks extends Component {
 
   render() {
     const { books, onUpdateShelf } = this.props
-    let showingBooks = books
+    const shelves = [
+      {
+        id: "currentlyReading",
+        title: "Currently Reading",
+        books: books.filter(book => book.shelf === "currentlyReading")
+      },
+      {
+        id: "wantToRead",
+        title: "Want to Read",
+        books: books.filter(book => book.shelf === "wantToRead")
+      },
+      {
+        id: "read",
+        title: "Read",
+        books: books.filter(book => book.shelf === "read")
+      }
+    ]
 
     return (
       <div className="list-books">
@@ -19,24 +35,15 @@ class ListBooks extends Component {
         </div>
         <div className="list-books-content">
           <div>
-            <BookShelf
-              title="Currently Reading"
-              onUpdateShelf={onUpdateShelf}
-              books={showingBooks.filter((book) => {
-                return book.shelf === "currentlyReading"
-              })} />
-            <BookShelf
-              title="Want to Read"
-              onUpdateShelf={onUpdateShelf}
-              books={showingBooks.filter((book) => {
-                return book.shelf === "wantToRead"
-              })} />
-            <BookShelf
-              title="Read"
-              onUpdateShelf={onUpdateShelf}
-              books={showingBooks.filter((book) => {
-                return book.shelf === "read"
-              })} />
+            {
+              shelves.map(shelf => (
+                <BookShelf
+                  key={shelf.id}
+                  title={shelf.title}
+                  onUpdateShelf={onUpdateShelf}
+                  books={shelf.books} />
+              ))
+            }
           </div>
         </div>
       </div>
