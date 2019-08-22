@@ -1,70 +1,62 @@
-import React, { Component } from 'react'
-import * as BooksAPI from './BooksAPI'
-import RemoteLibrary from './RemoteLibrary'
-import { Link } from 'react-router-dom'
-import PropTypes from 'prop-types'
+import React, {useState, useEffect} from 'react';
+import * as BooksAPI from './BooksAPI';
+import RemoteLibrary from './RemoteLibrary';
+import {Link} from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-class SearchBooks extends Component {
-  static propTypes = {
-    onUpdateShelf: PropTypes.func.isRequired,
-    onGetBookShelf: PropTypes.func.isRequired
-  }
+const SearchBooks = (props) => {
+  const {onUpdateShelf, onGetBookShelf} = props;
+  const [query, updateQuery] = useState('');
+  const [foundBooks, updateFound] = useState([]);
 
-  state = {
-    query: '',
-    foundBooks: []
-  }
-
-  componentDidUpdate () {
-    if (this.state.query && this.state.foundBooks.length === 0) {
-      BooksAPI.search(this.state.query)
-      .then((books) => {
-        if(books.error) {
-          console.log("Search error: " + books.error)
+  useEffect(() => {
+    if (query && foundBooks.length === 0) {
+      BooksAPI.search(query).then((books) => {
+        if (books.error) {
+          console.log('Search error: ' + books.error);
+        } else {
+          updateFound(books);
         }
-        else {
-          this.setState({foundBooks: books})
-        }
-      })
+      });
     }
-  }
+  });
 
-
-
-  updateQuery = (query) => {
+  const handleUserQuery = (query) => {
     // console.log("Query: " + query)
-    this.setState({query: query})
-    this.setState({foundBooks: []})
-  }
+    updateQuery(query);
+    updateFound([]);
+  };
 
-  render() {
-    const { onUpdateShelf, onGetBookShelf } = this.props
-    let count = this.state.foundBooks.length
-
-    return (
-      <div className="search-books">
-        <div className="search-books-bar">
-          <Link
-            to="/"
-            className="close-search">Close</Link>
-          <div className="search-books-input-wrapper">
-            <input
-              type="text"
-              placeholder="Search by title or author"
-              value={this.state.query}
-              onChange={(event) => this.updateQuery(event.target.value)}/>
-          </div>
-        </div>
-        <div className="search-books-results">
-          {this.state.query && `Found ${count} books for ${this.state.query}`}
-          <RemoteLibrary
-            books={this.state.foundBooks}
-            onUpdateShelf={onUpdateShelf}
-            onGetBookShelf={onGetBookShelf} />
+  return (
+    <div className='search-books'>
+      <div className='search-books-bar'>
+        <Link to='/' className='close-search'>
+          Close
+        </Link>
+        <div className='search-books-input-wrapper'>
+          <input
+            type='text'
+            placeholder='Search by title or author'
+            value={query}
+            onChange={(event) => handleUserQuery(event.target.value)}
+          />
         </div>
       </div>
-    )
-  }
-}
+      <div className='search-books-results'>
+        {query && `Found ${foundBooks.length} books for ${query}`}
+        <RemoteLibrary
+          books={foundBooks}
+          onUpdateShelf={onUpdateShelf}
+          onGetBookShelf={onGetBookShelf}
+        />
+      </div>
+    </div>
+  );
+};
+
+SearchBooks.propTypes = {
+  onUpdateShelf: PropTypes.func.isRequired,
+  onGetBookShelf: PropTypes.func.isRequired,
+};
 
 export default SearchBooks;
