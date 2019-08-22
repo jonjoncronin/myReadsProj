@@ -1,68 +1,65 @@
 <!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
-
 - [Summary](#summary)
 - [Requirements](#requirements)
-	- [Application Setup](#application-setup)
-	- [Main page](#main-page)
-	- [Search page](#search-page)
-	- [Routing](#routing)
-	- [Code Functionality](#code-functionality)
-	- [Documentation](#documentation)
+  - [Application Setup](#application-setup)
+  - [Main page](#main-page)
+  - [Search page](#search-page)
+  - [Routing](#routing)
+  - [Code Functionality](#code-functionality)
 - [High Level Design](#high-level-design)
 - [Components](#components)
-	- [BooksApp](#booksapp)
-	- [ListBooks](#listbooks)
-	- [SearchBooks](#searchbooks)
-	- [BookShelf](#bookshelf)
-	- [RemoteLibrary](#remotelibrary)
-	- [Book](#book)
+  - [BooksApp](#booksapp)
+  - [ListBooks](#listbooks)
+  - [SearchBooks](#searchbooks)
+  - [BookShelf](#bookshelf)
+  - [RemoteLibrary](#remotelibrary)
+  - [Book](#book)
 - [Resources](#resources)
-	- [/public/index.html](#publicindexhtml)
-	- [/src/index.js](#srcindexjs)
-	- [/src/App.js](#srcappjs)
-	- [/src/ListBooks.js](#srclistbooksjs)
-	- [/src/BookShelf.js](#srcbookshelfjs)
-	- [/src/SearchBooks.js](#srcsearchbooksjs)
-	- [/src/RemoteLibrary.js](#srcremotelibraryjs)
-	- [/src/Book.js](#srcbookjs)
-	- [/src/BooksAPI.js](#srcbooksapijs)
+  - [/public/index.html](#publicindexhtml)
+  - [/src/index.js](#srcindexjs)
+  - [/src/App.js](#srcappjs)
+  - [/src/ListBooks.js](#srclistbooksjs)
+  - [/src/BookShelf.js](#srcbookshelfjs)
+  - [/src/SearchBooks.js](#srcsearchbooksjs)
+  - [/src/RemoteLibrary.js](#srcremotelibraryjs)
+  - [/src/Book.js](#srcbookjs)
+  - [/src/BooksAPI.js](#srcbooksapijs)
 - [Usage](#usage)
-
 <!-- /TOC -->
 
 # Summary
 The MyReads project is a bookshelf app that allows you to select and categorize
 books you have read, are currently reading, or want to read. The project
 emphasizes using React to build the application and provides an API server and
-client library that you will use to persist information as you interact with the
-application.
+client library that you will use to persist information as you interact with
+the application.
 
 The MyReads project is the 1st project laid out in the curriculum for the
 Udacity React Nanodegree.
 
 # Requirements
 ## Application Setup
-* Installation and Setup
+- Installation and Setup
   - The application was created with create-react-app and requires only npm
     install and npm start to get it installed and launched.
-* Documentation
+- Documentation
   - An updated README that describes the project and has instructions for
     installing and launching the project is included.
 
 ## Main page
-* 3 Categories/Bookshelves
+- 3 Categories/Bookshelves
   - The main page shows 3 shelves for books, and each book is shown on the
     correct shelf.
-* Ability to move books between Bookshelves
+- Ability to move books between Bookshelves
   - The main page shows a control that allows users to move books between
-    shelves. The control should be tied to each book instance. The functionality
-    of moving a book to a different shelf works correctly.
-* Persistent Data
+    shelves. The control should be tied to each book instance. The 
+    functionality of moving a book to a different shelf works correctly.
+- Persistent Data
   - When the browser is refreshed, the same information is displayed on the
     page.
 
 ## Search page
-* Search Input Field
+- Search Input Field
   - The search page has a search input field.
   - The search page behaves correctly:
     - As the user types into the search field, books that match the query are
@@ -74,32 +71,33 @@ Udacity React Nanodegree.
       author. (To test this, try searching for "poetry" and "biography").
     - The user is able to search for multiple words, such as “artificial
       intelligence.”
-* Ability to move books to a bookshelf
+- Ability to move books to a bookshelf
   - Search results on the search page allow the user to select “currently
     reading”, “want to read”, or “read” to place the book in a certain shelf.
     Books that have not been assigned a shelf should have a checkmark next to
     "None."
-* Bookselves on main page reflect selections made on search page
- - When an item is categorized on the search page and the user navigates to the
-   main page, it appears on that shelf in the main page.
+- Bookselves on main page reflect selections made on search page
+
+* When an item is categorized on the search page and the user navigates to the
+  main page, it appears on that shelf in the main page.
 
 ## Routing
-* Main page links to search page
+- Main page links to search page
   - The main page contains a link to the search page. When the link is clicked,
     the search page is displayed and the URL in the browser’s address bar is
     /search.
-* Search page links back to main page
+- Search page links back to main page
   - The search page contains a link to the main page. When the link is clicked,
     the main page is displayed and the URL in the browser’s address bar is /.
 
 ## Code Functionality
-* State Management
+- State Management
   - Component state is passed down from parent components to child components.
     The state variable is not modified directly - setState() function is used
     correctly.
   - Books have the same state on both the search page and the main application
     page: If a book is on a bookshelf, that is reflected in both locations.
-* JSX Formatting
+- JSX Formatting
   - All JSX code is formatted properly and functional.
 
 # High Level Design
@@ -135,10 +133,10 @@ onUpdateShelf functionality that is used to move books from one shelf to
 another. Further this component also contains the Routing for application
 between the main page and search page.
 
-In the main page instance this component will encapsulate calls to the ListBooks
-component that will show the users bookshelves as well as to the SearchBooks
-component that will allow the user to search a remote library for books that
-match inputted search values.
+In the main page instance this component will encapsulate calls to the 
+ListBooks component that will show the users bookshelves as well as to the 
+SearchBooks component that will allow the user to search a remote library for
+books that match inputted search values.
 
 ## ListBooks
 The ListBooks component is a component that renders all the books in the
@@ -156,8 +154,8 @@ the search query as well as the list of books returned from that search lookup
 made to the remote repository of books.
 
 The SearchBooks component does contain a query state variable as well as a
-foundBooks state variable. This allows the component to maintain the current and
-potentially changing search query the user may be supplying as well as the
+foundBooks state variable. This allows the component to maintain the current
+and potentially changing search query the user may be supplying as well as the
 list of books that a search will return from a remote library.
 
 The SearchBooks component requires that it be invoked with a function to update
@@ -170,8 +168,8 @@ RemoteLibrary which represents the list of books that a search returns.
 The BookSelf component is a component that renders all the books in a specific
 list of books. The BookShelf component has no state but does require that it be
 invoked with a title, a list of books, and a function to update the shelf a book
-may be placed in. The intent is that the parent component knows what title,
-set of books and update function should be used when invoked.
+may be placed in. The intent is that the parent component knows what title, set
+of books and update function should be used when invoked.
 
 The BookShelf component does rendering for the bookshelf by looping over the
 list of books and encapsulating multiple instances of the Book components
@@ -190,85 +188,85 @@ multiple instances of the Book component.
 
 ## Book
 The Book component is a component that renders a specific book and the input
-controls to dictate which self a book should be placed. This component
-contains no state but does require that it be invoked with a book object and a
-function to update the shelf a book may be placed in.
+controls to dictate which self a book should be placed. This component contains
+no state but does require that it be invoked with a book object and a function
+to update the shelf a book may be placed in.
 
 The Book component renders the book using the fields of the book and
 additionally provides an input for the user to select which bookshelf they want
 a book to be classified under. This user input will execute the passed in
 function to update the shelf a book is in. This update will travel up through
-the layers of invocation and update the main state variables being maintained by
-the BooksApp component.
+the layers of invocation and update the main state variables being maintained 
+by the BooksApp component.
 
-This Book component is utilized in both the RemoteLibrary component as well
-as the BookShelf component.
+This Book component is utilized in both the RemoteLibrary component as well as
+the BookShelf component.
 
 # Resources
 ## /public/index.html
-index.html is the initial page that is served up to a user browsing to the site.
-This page is extremely simplistic but contains an element that is very
+index.html is the initial page that is served up to a user browsing to the 
+site. This page is extremely simplistic but contains an element that is very
 important. The "root" div is the div where the application will populate all
-rendered content. Without this "root" div nothing in the rest of the Single Page
-Application would be visible to the user.
+rendered content. Without this "root" div nothing in the rest of the Single
+Page Application would be visible to the user.
 
 ## /src/index.js
-index.js, similar to index.html, is a simplistic JavaScript file but contains
-a call to the ReactDOM library which will render all the components listed out
-and described below.
-There is an important addition made to the index.js file to support Routing.
-The BrowserRouter package allows routing support and is described in the
-Usage section below.
+index.js, similar to index.html, is a simplistic JavaScript file but contains a
+call to the ReactDOM library which will render all the components listed out
+and described below. There is an important addition made to the index.js file
+to support Routing. The BrowserRouter package allows routing support and is
+described in the Usage section below.
 
 ## /src/App.js
-App.js defines a BooksApp class that begins to define the foundations of the
-MyReads application. This file contains definition for the App component that
-contains the state model for the entire application.
+App.js defines a BooksApp functional component that begins to define the
+foundations of the MyReads application. This file contains definition for the
+App component that contains the state model for the entire application.
 
 ## /src/ListBooks.js
-ListBooks.js defines a ListBooks class that will render the 3 categories of
-bookshelves - Want to Read, Currently Reading, Read - that the user can have
-books currently classified under.
+ListBooks.js defines a ListBooks functional component that will render the 3
+categories of bookshelves - Want to Read, Currently Reading, Read - that the
+user can have books currently classified under.
 
 ## /src/BookShelf.js
-BookShelf.js defines a BookShelf class that will render the books in a specific
-bookshelf.
+BookShelf.js defines a BookShelf functional component that will render the 
+books in a specific bookshelf.
 
 ## /src/SearchBooks.js
-SearchBooks.js defines a SearchBooks class that will render the input text field
-the user will put their search query in as well as encapsulate an instance of
-a RemoteLibrary component that represents the set of books that match the search
-query supplied by the user.
+SearchBooks.js defines a SearchBooks functional component that will render the
+input text field the user will put their search query in as well as encapsulate
+an instance of a RemoteLibrary component that represents the set of books that
+match the search query supplied by the user.
 
 ## /src/RemoteLibrary.js
-RemoteLibrary.js defines a RemoteLibrary class that will render the books in
-a list that is returned for a specific search query.
+RemoteLibrary.js defines a RemoteLibrary functional component that will render
+the books in a list that is returned for a specific search query.
 
 ## /src/Book.js
-Book.js defines a Book class that will render a specific book.
+Book.js defines a Book functional component that will render a specific book.
 
 ## /src/BooksAPI.js
 BooksAPI.js was supplied by the instructors as part of the rubric. This
-JavaScript file defines a set of functions that can be used to retrieve a
-users library of books, retrieve a single book in a users library, update the
-shelf for a specific book and search a remote repository of books. This API
-allows the student working on this project to not have to worry about the
-backend implementation of the application. This API is necessary to support
-multiple users of the application and is used by the BooksApp component to
-initially load the set of books in a users personal library. It is also used
-by the SearchBooks component after a user has specified a search query to
-retrieve the set of books from the remote repository. Finally it is also used
-again by the BooksApp component when the shelf of a book needs to be updated.
-The shelf update travels up from the Book component either via the RemoteLibrary
+JavaScript file defines a set of functions that can be used to retrieve a users
+library of books, retrieve a single book in a users library, update the shelf
+for a specific book and search a remote repository of books. This API allows
+the student working on this project to not have to worry about the backend
+implementation of the application. This API is necessary to support multiple
+users of the application and is used by the BooksApp component to initially
+load the set of books in a users personal library. It is also used by the
+SearchBooks component after a user has specified a search query to retrieve the
+set of books from the remote repository. Finally it is also used again by the
+BooksApp component when the shelf of a book needs to be updated. The shelf
+update travels up from the Book component either via the RemoteLibrary
 component or via the BookShelf component.
 
 # Usage
-This project assumes that you've got NPM installed. As the JavaScript to
-handle dynamic rendering of content and responding to user input is all included
-in the folders of the repo, a user additionally needs to be using a web browser
+This project assumes that you've got NPM installed. As the JavaScript to handle
+dynamic rendering of content and responding to user input is all included in
+the folders of the repo, a user additionally needs to be using a web browser
 that supports JavaScript.
 
-1. Pull the entirety of the repo and the directory structure to your local machine.
+1. Pull the entirety of the repo and the directory structure to your local
+   machine.
 2. Navigate to that directory via terminal or the command line.
 3. Execute npm install
 4. Execute npm start
